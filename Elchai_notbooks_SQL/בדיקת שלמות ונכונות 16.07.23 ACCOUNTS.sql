@@ -46,7 +46,7 @@
 		(SELECT [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
 	 ON CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
-    Full OUTER JOIN 
+   Full OUTER JOIN 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as B
 	ON CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
 	 WHERE CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) IS NOT NULL AND B.[מספר תיק] IS  NULL	 
@@ -123,17 +123,13 @@
 
 	---------------------------------------------------------תאריך פתיחה---------------------
 
-DROP table if exists FINDINGS_פתיחה
-
-
+       DROP table if exists FINDINGS_פתיחה
 	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.SDATE,B.[מספר תיק],B.[תאריך פתיחה]
-			
-
---INTO FINDINGS_פתיחה
+  --INTO FINDINGS_פתיחה
 	FROM (select * 
 			,datefromparts(left([תאריך פתיחת חשבון (חובה)],4),substring([תאריך פתיחת חשבון (חובה)],5,2),right([תאריך פתיחת חשבון (חובה)],2)) as SDATE
 			FROM [dbo].[FMR_MAKOR_NEW]) as A
-left Join
+      lLEFT JOIN
 		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
 	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
