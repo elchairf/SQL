@@ -2,143 +2,143 @@
 --חשבונות---
 ---הסבת מערכת מידע-----
 ---בדיקות שלמות------
-
+--בוצעה בדיקה לחברה שעשתה הסבה למערכת מידע אחת לאחרת התקבלו במקרה זה הנתונים עבור פרטי חשבונות של מערכת מקור ויעד כולל שימוש בטבלת המרה
 
 ------------------------------------------------העברת נתונים במקור אל מול היעד---------
 
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) ,B.[מספר תיק]) MIS_TIK,
-	CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) AS  FMR ,B.[מספר תיק],H.[מספר תיק אפ#אמ#אר] as fmr_file_hamara_table
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) ,B.[מספר תיק]) MIS_TIK,
+	CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) AS  FMR ,B.[מספר תיק],H.[מספר תיק חברה#מבוקשת#מקור] as fmr_file_hamara_table
     --INTO FINDINGS_בדיקה1
     --פקודה זאת תהיה במקרה שנרצה ליצור טבלה חדשה
 	FROM [dbo].[FMR_MAKOR_NEW] as A  
     left Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-    ON CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+    ON CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
     Full outer Join 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
-	ON  CAST( H.[מספר תיק דנאל] AS nvarchar) = B.[מספר תיק]
-     WHERE CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)  IS NOT NULL
+	ON  CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar) = B.[מספר תיק]
+     WHERE CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)  IS NOT NULL
 	 AND B.[מספר תיק] IS  NULL
 
 -------------------------------------העברת נתונים- ביעד אל מול המקור בדיקה 2-------------
 
     DROP table if exists FINDINGS_בדיקה1
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק],H.[מספר תיק אפ#אמ#אר] as fmr_file_hamara_table
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק],H.[מספר תיק חברה#מבוקשת#מקור] as fmr_file_hamara_table
     --INTO FINDINGS_בדיקה1
 	FROM [dbo].[FMR_MAKOR_NEW] as A
     Left Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 ON CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 ON CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
     Full outer Join 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as B
-	On CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
-    WHERE CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) IS NULL AND B.[מספר תיק] IS NOT NULL
+	On CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
+    WHERE CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) IS NULL AND B.[מספר תיק] IS NOT NULL
 
   -----------------------העברת נתונים- במקור אל מול היעד בדיקה 1-----------------------------------
 
    DROP table if exists FINDINGS_בדיקה2
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק],H.[מספר תיק אפ#אמ#אר] as fmr_file_hamara_table			
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק],H.[מספר תיק חברה#מבוקשת#מקור] as fmr_file_hamara_table			
     --INTO FINDINGS_בדיקה2
 	FROM [dbo].[FMR_MAKOR_NEW] as A
     LEFT JOIN
-		(SELECT [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(SELECT [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 ON CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 ON CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
    Full OUTER JOIN 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as B
-	ON CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
-	 WHERE CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) IS NOT NULL AND B.[מספר תיק] IS  NULL	 
+	ON CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
+	 WHERE CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) IS NOT NULL AND B.[מספר תיק] IS  NULL	 
 
 	 --------------------העברת נתונים-טבלת המרה אל מול מקור- בדיקה 3----------------------------------
 
 	 DROP table if exists FINDINGS_בדיקה3
-	  SELECT  CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),H.[מספר תיק אפ#אמ#אר] as fmr_file_hamara_table
+	  SELECT  CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),H.[מספר תיק חברה#מבוקשת#מקור] as fmr_file_hamara_table
      --INTO FINDINGS_בדיקה3  
     FROM [PSAGOT_FMR].[dbo].[FMR_MAKOR_NEW] as A
     FULL OUTER Join
-        (SELECT [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (SELECT [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     ON CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
-	 WHERE CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) IS NULL AND H.[מספר תיק אפ#אמ#אר] IS NOT NULL
+     ON CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
+	 WHERE CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) IS NULL AND H.[מספר תיק חברה#מבוקשת#מקור] IS NOT NULL
 
 ---------------העברת נתונים-מקור אל מול טבלת המרה-בדיקה 4-----------------------
 
    DROP table if exists FINDINGS_בדיקה4
-   SELECT  CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),H.[מספר תיק אפ#אמ#אר] as fmr_file_hamara_table
+   SELECT  CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),H.[מספר תיק חברה#מבוקשת#מקור] as fmr_file_hamara_table
   --INTO FINDINGS_בדיקה4  
     FROM 
-	(SELECT * FROM [PSAGOT_FMR_NEW].[dbo].[FMR_MAKOR_NEW] WHERE [מס. חשבון פסגות   (אפ.אמ.אר)] IS NOT NULL)as A
+	(SELECT * FROM [PSAGOT_FMR_NEW].[dbo].[FMR_MAKOR_NEW] WHERE [מס. חשבון חברה מבוקשת   (קובץ מקור)] IS NOT NULL)as A
     FULL OUTER Join
-        (SELECT [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (SELECT [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-    ON CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
-    WHERE CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) IS NOT NULL AND H.[מספר תיק אפ#אמ#אר] IS NULL
+    ON CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
+    WHERE CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) IS NOT NULL AND H.[מספר תיק חברה#מבוקשת#מקור] IS NULL
 
 	 -------------------------העברת נתונים-טבלת המרה אל מול יעד בדיקה 5---------------
 
    DROP table if exists FINDINGS_בדיקה5 
-   SELECT  H.[מספר תיק אפ#אמ#אר] as fmr_file_hamara_table,CAST( H.[מספר תיק דנאל] AS nvarchar) danel_file_hamara_table,A.[מספר תיק]
+   SELECT  H.[מספר תיק חברה#מבוקשת#מקור] as fmr_file_hamara_table,CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar) danel_file_hamara_table,A.[מספר תיק]
    --INTO FINDINGS_בדיקה5  
     FROM  [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as A
     FULL OUTER Join
-        (SELECT [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (SELECT [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on A.[מספר תיק]=CAST( H.[מספר תיק דנאל] AS nvarchar)
-	 WHERE A.[מספר תיק]IS  NULL AND CAST( H.[מספר תיק דנאל] AS nvarchar) IS NOT NULL
+     on A.[מספר תיק]=CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)
+	 WHERE A.[מספר תיק]IS  NULL AND CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar) IS NOT NULL
 
 	 -------------------------העברת נתונים-יעד אל מול טבלת המרה בדיקה 6------------------------------
 
 	   DROP table if exists FINDINGS_בדיקה6
-	    SELECT  H.[מספר תיק אפ#אמ#אר] as fmr_file_hamara_table,CAST( H.[מספר תיק דנאל] AS nvarchar) danel_file_hamara_table,A.[מספר תיק]
+	    SELECT  H.[מספר תיק חברה#מבוקשת#מקור] as fmr_file_hamara_table,CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar) danel_file_hamara_table,A.[מספר תיק]
    	--INTO FINDINGS_בדיקה6
     FROM  [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as A
     FULL OUTER Join
-        (SELECT [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (SELECT [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     ON A.[מספר תיק]=CAST( H.[מספר תיק דנאל] AS nvarchar)
-	 WHERE A.[מספר תיק]IS NOT NULL AND CAST( H.[מספר תיק דנאל] AS nvarchar) IS  NULL
+     ON A.[מספר תיק]=CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)
+	 WHERE A.[מספר תיק]IS NOT NULL AND CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar) IS  NULL
 
    -----------בדיקות נכונות---------------------
 
 ------------------------------------------------------------------לבסוף לא נבדק-----שם חשבון----------------------
 
     DROP table if exists FINDINGS_חשבון
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK
 			,*
     --INTO FINDINGS_חשבון
 	FROM [dbo].[FMR_MAKOR_NEW] as A
     LEFT JOIN
-		(SELECT [מספר תיק אפ#אמ#אר],[מספר תיק דנאל],[שם חשבון] as [חשבון]
+		(SELECT [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד],[שם חשבון] as [חשבון]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 ON CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 ON CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
     Full outer Join 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as B
-	ON CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	ON CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 	where 1=1
 	and B.[מספר תיק] is not null 
-	and CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) is not null
+	and CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) is not null
 	and H.[חשבון]<>B.[שם חשבון]
 
 	---------------------------------------------------------תאריך פתיחה---------------------
 
        DROP table if exists FINDINGS_פתיחה
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.SDATE,B.[מספר תיק],B.[תאריך פתיחה]
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.SDATE,B.[מספר תיק],B.[תאריך פתיחה]
   --INTO FINDINGS_פתיחה
 	FROM (select * 
 			,datefromparts(left([תאריך פתיחת חשבון (חובה)],4),substring([תאריך פתיחת חשבון (חובה)],5,2),right([תאריך פתיחת חשבון (חובה)],2)) as SDATE
 			FROM [dbo].[FMR_MAKOR_NEW]) as A
       lLEFT JOIN
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join 
 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
 	where 1=1
 	
@@ -151,11 +151,11 @@ DROP table if exists FINDINGS_קוד_סיווג_ניירות_ערך
 
 
 
-SELECT DISTINCT T.[מס. חשבון פסגות   (אפ.אמ.אר)],T.SIVUG,T.[קוד סיווג ני"ע  (חובה)],T.[מספר תיק],T.[קוד סיווג ני"ע]
+SELECT DISTINCT T.[מס. חשבון חברה מבוקשת   (קובץ מקור)],T.SIVUG,T.[קוד סיווג ני"ע  (חובה)],T.[מספר תיק],T.[קוד סיווג ני"ע]
 FROM
 
 (
-SELECT CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) as [מס. חשבון פסגות   (אפ.אמ.אר)] ,A.SIVUG,A.[קוד סיווג ני"ע  (חובה)],B.[מספר תיק],B.[קוד סיווג ני"ע]
+SELECT CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) as [מס. חשבון חברה מבוקשת   (קובץ מקור)] ,A.SIVUG,A.[קוד סיווג ני"ע  (חובה)],B.[מספר תיק],B.[קוד סיווג ני"ע]
 --INTO FINDINGS_קוד_סיווג_ניירות_ערך
 	 
 		FROM( select *
@@ -167,15 +167,15 @@ SELECT CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) as 
 	        FROM(SELECT *,len( [קוד סיווג ני"ע  (חובה)]) as string
                  FROM [PSAGOT_FMR_NEW].[dbo].[FMR_MAKOR_NEW]) as M )as A
 	left Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join 
 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
 	where 1=1
 	
@@ -183,49 +183,29 @@ SELECT CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) as 
 
 	) AS T
 
-
-	
-
-
 		---------------------------------------------------------תוקף סיווג---------------------
-
-DROP table if exists FINDINGS_ת_סיווג
-
-
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.[תאריך תוקף סיווג (חובה)],B.[מספר תיק],B.T_SIVUG,B.[תאריך תוקף סיווג]
-			
-
---INTO FINDINGS_ת_סיווג
+     DROP table if exists FINDINGS_ת_סיווג
+     SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.[תאריך תוקף סיווג (חובה)],B.[מספר תיק],B.T_SIVUG,B.[תאריך תוקף סיווג]			
+    --INTO FINDINGS_ת_סיווג
 	FROM (select * 	FROM [dbo].[FMR_MAKOR_NEW]) as A
-left Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+      left Join
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
-
- Join 
-
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
+       Join 
 	(select *
 			, T_SIVUG= cast(year([תאריך תוקף סיווג]) as nvarchar) + cast(month([תאריך תוקף סיווג]) as nvarchar) + cast(day([תאריך תוקף סיווג])  as nvarchar)
 			FROM [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3]) as B
-
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
-
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 	where 1=1
-	
-	
-
 	and  ISNULL (A.[תאריך תוקף סיווג (חובה)],0)<>ISNULL(B.T_SIVUG,0)
-
-
-
-
 
 	       -----------------------------------------------------------------------תאריך דיווח פטור----------------------
 
 	DROP table if exists FINDINGS_תאריך_דיווח
 
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.SDATE,A.[תאריך דיווח פטור של החשבון על ידי מס הכנסה (חובה לפטור)],B.[מספר תיק],B.[תאריך דיווח פטור ]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.SDATE,A.[תאריך דיווח פטור של החשבון על ידי מס הכנסה (חובה לפטור)],B.[מספר תיק],B.[תאריך דיווח פטור ]
             
 
     --INTO FINDINGS_תאריך_דיווח
@@ -234,15 +214,15 @@ left Join
             ,datefromparts(left([תאריך דיווח פטור של החשבון על ידי מס הכנסה (חובה לפטור)],4),substring([תאריך דיווח פטור של החשבון על ידי מס הכנסה (חובה לפטור)],5,2),right([תאריך דיווח פטור של החשבון על ידי מס הכנסה (חובה לפטור)],2)) AS SDATE
             FROM [dbo].[FMR_MAKOR_NEW]) as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
     Full outer Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
     
@@ -255,21 +235,21 @@ Join
 DROP table if exists FINDINGS_דיבידנד
 
 
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.[אחוז מס דיבנד (חובה)],B.[מספר תיק],B.[אחוז מס דיבידנד]
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.[אחוז מס דיבנד (חובה)],B.[מספר תיק],B.[אחוז מס דיבידנד]
 			
 
 --INTO FINDINGS_דיבידנד
 	FROM [dbo].[FMR_MAKOR_NEW] as A
 left Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
 Join 
 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as B
 
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
 	where 1=1
 	
@@ -283,20 +263,20 @@ Join
 DROP table if exists FINDINGS_ריבית
 
 
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK ,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.[אחוז מס ריבית (חובה)],B.[מספר תיק],B.[אחוז מס ריבית]
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK ,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.[אחוז מס ריבית (חובה)],B.[מספר תיק],B.[אחוז מס ריבית]
 			
 
 --INTO FINDINGS_ריבית
 	FROM [dbo].[FMR_MAKOR_NEW] as A
 Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
  Join 
 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as B
 
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
 	where 1=1
 	
@@ -309,21 +289,21 @@ Join
 DROP table if exists FINDINGS_תמורה
 
 
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK
 			,*
 
 --INTO FINDINGS_תמורה
 	FROM [dbo].[FMR_MAKOR_NEW] as A
 Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל],[שם חשבון] as [חשבון]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד],[שם חשבון] as [חשבון]
 		FROM[PSAGOT_FMR].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join 
 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
 	where 1=1
 	
@@ -339,7 +319,7 @@ Join
 DROP table if exists FINDINGS_בורסה
 
 
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,*
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,*
 			
 
 INTO FINDINGS_בורסה
@@ -349,19 +329,19 @@ INTO FINDINGS_בורסה
 				end as HAVER 
 				FROM[dbo].[FMR_MAKOR_NEW]) as A
 Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל],[שם חשבון] as [חשבון]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד],[שם חשבון] as [חשבון]
 		FROM[PSAGOT_FMR].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
 Full outer Join 
 
 	[PSAGOT_FMR].[dbo].[FMR_ACCOUNTS] as B
 
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
 	where 1=1
 	and B.[מספר תיק] is not null 
-	and CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) is not null
+	and CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) is not null
 
 	and A.HAVER<>B.[סטטוס חבר בורסה] 
 
@@ -372,13 +352,13 @@ Full outer Join
 DROP table if exists FINDINGS_מערכת
 
   
-SELECT DISTINCT T.[מס. חשבון פסגות   (אפ.אמ.אר)],T.MAAREHET,T.[חשבון במערכת סגורה (חובה)],T.[מספר תיק],T.[חשבון במערכת סגורה]
+SELECT DISTINCT T.[מס. חשבון חברה מבוקשת   (קובץ מקור)],T.MAAREHET,T.[חשבון במערכת סגורה (חובה)],T.[מספר תיק],T.[חשבון במערכת סגורה]
 FROM
 
 (
 
   SELECT *
-	--SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) AS [מס. חשבון פסגות   (אפ.אמ.אר)] ,B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.MAAREHET,A.[חשבון במערכת סגורה (חובה)],B.[מספר תיק],B.[חשבון במערכת סגורה]
+	--SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) AS [מס. חשבון חברה מבוקשת   (קובץ מקור)] ,B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.MAAREHET,A.[חשבון במערכת סגורה (חובה)],B.[מספר תיק],B.[חשבון במערכת סגורה]
 			
 
 --INTO FINDINGS_מערכת
@@ -389,15 +369,15 @@ FROM
 				End as MAAREHET
 			FROM [dbo].[FMR_MAKOR_NEW]) as A
 Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join 
 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
 	where 1=1
 	
@@ -416,7 +396,7 @@ Join
 DROP table if exists FINDINGS_שומה
 
 
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK
 			
 
 --INTO FINDINGS_שומה
@@ -427,16 +407,16 @@ DROP table if exists FINDINGS_שומה
 	[dbo].[FMR_MAKOR_NEW] as A
 
 Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
 
  Join 
 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as B
 
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
 	where 1=1
 	
@@ -452,7 +432,7 @@ Join
 
     DROP table if exists FINDINGS_חשבון
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.MALKAR,[אינדיקציה מלכ"ר (חובה)],B.[מספר תיק],B.[אינדיקציה מלכ"ר]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.MALKAR,[אינדיקציה מלכ"ר (חובה)],B.[מספר תיק],B.[אינדיקציה מלכ"ר]
     --INTO FINDINGS_חשבון
 
 	FROM (select *
@@ -463,15 +443,15 @@ Join
 			FROM [dbo].[FMR_MAKOR_NEW]) as A
 
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
 Full outer Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
     
@@ -483,20 +463,20 @@ Full outer Join
 
    DROP table if exists FINDINGS_חשבון
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) ,A.[תיק מס הכנסה / מע"מ (חובה לפטור)],B.[מספר תיק],B.[תיק מס הכנסה/מעמ]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) ,A.[תיק מס הכנסה / מע"מ (חובה לפטור)],B.[מספר תיק],B.[תיק מס הכנסה/מעמ]
 
     --INTO FINDINGS_חשבון
     FROM [dbo].[FMR_MAKOR_NEW] as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
    
@@ -508,7 +488,7 @@ Join
 
 	DROP table if exists FINDINGS_סיווג
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.SIVUG,A.[סיווג לקוח למס (חובה)],B.[מספר תיק],B.[סיווג לקוח למס]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.SIVUG,A.[סיווג לקוח למס (חובה)],B.[מספר תיק],B.[סיווג לקוח למס]
 	
   
   --INTO FINDINGS_סיווג
@@ -522,15 +502,15 @@ Join
 				End as SIVUG
 		FROM [dbo].[FMR_MAKOR_NEW] )as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
  
@@ -542,7 +522,7 @@ Join
 
 	DROP table if exists FINDINGS_עסקאות
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.ISKA,A.[עסקאות במטבע (עסקאות בנגרים) (חובה)],B.[מספר תיק],B.[עסקאות במטבע]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.ISKA,A.[עסקאות במטבע (עסקאות בנגרים) (חובה)],B.[מספר תיק],B.[עסקאות במטבע]
 	
   
    --INTO FINDINGS_עסקאות
@@ -555,15 +535,15 @@ Join
 				End as ISKA	
 				FROM [dbo].[FMR_MAKOR_NEW] ) as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
     
@@ -575,14 +555,14 @@ Join
 
 	DROP table if exists FINDINGS_סוג
 
-	SELECT DISTINCT T.[מס. חשבון פסגות   (אפ.אמ.אר)],T.SUG,T.[סוג חשבון    (חובה)],T.[מספר תיק],T.[סוג חשבון]
+	SELECT DISTINCT T.[מס. חשבון חברה מבוקשת   (קובץ מקור)],T.SUG,T.[סוג חשבון    (חובה)],T.[מספר תיק],T.[סוג חשבון]
 
 	FROM
 
 	(
 
 	SELECT *
-    --SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.SUG,A.[סוג חשבון    (חובה)],B.[מספר תיק],B.[סוג חשבון]
+    --SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.SUG,A.[סוג חשבון    (חובה)],B.[מספר תיק],B.[סוג חשבון]
 	
   
     --INTO FINDINGS_סוג
@@ -598,14 +578,14 @@ Join
 				End as SUG	
 				FROM [dbo].[FMR_MAKOR_NEW]) as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
  Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
  
@@ -621,21 +601,21 @@ Join
 
 	DROP table if exists FINDINGS_מסגרת_שקל
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.[מסגרת בשקלים (חובה)],B.[מספר תיק],B.[מסגרת בשקלים]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.[מסגרת בשקלים (חובה)],B.[מספר תיק],B.[מסגרת בשקלים]
 
   
     --INTO FINDINGS_מסגרת_שקל
     FROM [dbo].[FMR_MAKOR_NEW] as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
 
@@ -648,21 +628,21 @@ Join
 
 	DROP table if exists FINDINGS_מסגרת_דולר
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק],A.[מסגרת בדולרים (חובה)] ,B.[מסגרת בדולרים]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק],A.[מסגרת בדולרים (חובה)] ,B.[מסגרת בדולרים]
 	
   
    --into  FINDINGS_מסגרת_דולר
     FROM [dbo].[FMR_MAKOR_NEW] as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM [PSAGOT_FMR].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
   
@@ -673,21 +653,21 @@ Join
 
 	DROP table if exists FINDINGS_ניכוי
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) ,A.[אישור ניכוי (חובה לפטור)] ,A.[אישור ניכוי (חובה לפטור)] as nvarchar,B.[מספר תיק],B.[אישור ניכוי]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) ,A.[אישור ניכוי (חובה לפטור)] ,A.[אישור ניכוי (חובה לפטור)] as nvarchar,B.[מספר תיק],B.[אישור ניכוי]
 	
   
     --into FINDINGS_ניכוי
     FROM [dbo].[FMR_MAKOR_NEW] as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
   
@@ -701,11 +681,11 @@ Join
 
 	DROP table if exists FINDINGS_פטור_מס
 
-	SELECT DISTINCT T.[מס. חשבון פסגות   (אפ.אמ.אר)],T.PTOR,[האם קיים פטור מאירועי מס בנושא ריט (נושא 2000 סוג תשואה 7) (חובה)],T.[מספר תיק],T.[האם קיים פטור ממס]
+	SELECT DISTINCT T.[מס. חשבון חברה מבוקשת   (קובץ מקור)],T.PTOR,[האם קיים פטור מאירועי מס בנושא ריט (נושא 2000 סוג תשואה 7) (חובה)],T.[מספר תיק],T.[האם קיים פטור ממס]
 	FROM 
 	(
 
-    --SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.PTOR,[האם קיים פטור מאירועי מס בנושא ריט (נושא 2000 סוג תשואה 7) (חובה)],B.[מספר תיק],B.[האם קיים פטור ממס]
+    --SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.PTOR,[האם קיים פטור מאירועי מס בנושא ריט (נושא 2000 סוג תשואה 7) (חובה)],B.[מספר תיק],B.[האם קיים פטור ממס]
 	SELECT *
   
     --into FINDINGS_פטור_מס
@@ -717,15 +697,15 @@ Join
 				End as PTOR
 				FROM [dbo].[FMR_MAKOR_NEW] ) as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
 Full outer Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
   
@@ -737,7 +717,7 @@ Full outer Join
 
 	DROP table if exists FINDINGS_סוג_פטור
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.PTOR,A.[סוג פטור (מכל הנושאים למעט ריט) (חובה)],B.[מספר תיק],B.[סוג פטור]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.PTOR,A.[סוג פטור (מכל הנושאים למעט ריט) (חובה)],B.[מספר תיק],B.[סוג פטור]
 	
   
     --into FINDINGS_סוג_פטור
@@ -749,15 +729,15 @@ Full outer Join
 				End as PTOR
 				FROM [dbo].[FMR_MAKOR_NEW] ) as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
  Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
    
@@ -769,7 +749,7 @@ Join
 
 	DROP table if exists FINDINGS_סיום_פטור
 
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK ,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.[תאריך סיום פטור של החשבון (חובה לפטור)],A.ENDDATE,B.[מספר תיק],B.[תאריך סיום פטור]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK ,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.[תאריך סיום פטור של החשבון (חובה לפטור)],A.ENDDATE,B.[מספר תיק],B.[תאריך סיום פטור]
 	
   
  --into FINDINGS_סיום_פטור
@@ -777,19 +757,19 @@ Join
 			,datefromparts(left([תאריך סיום פטור של החשבון (חובה לפטור)],4),substring([תאריך סיום פטור של החשבון (חובה לפטור)],5,2),right([תאריך סיום פטור של החשבון (חובה לפטור)],2)) as ENDDATE
 			FROM [dbo].[FMR_MAKOR_NEW])  as A
 Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
 
 Full outer Join
 
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
 
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 
    where 1=1
     and B.[מספר תיק] is not null
-    and CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) is not null
+    and CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) is not null
    
    and ISNULL(A.ENDDATE,'') <>ISNULL(B.[תאריך סיום פטור],'')
 
@@ -798,22 +778,22 @@ Full outer Join
 					-----------------------------------------------------------------------תחילת פטור----------------------
 
 	DROP table if exists FINDINGS_תחילת_פטור
-    SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),A.[תאריך תחילת פטור של החשבון (חובה לפטור)],A.SDATE,B.[מספר תיק],B.[תאריך תחילת פטור]
+    SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),A.[תאריך תחילת פטור של החשבון (חובה לפטור)],A.SDATE,B.[מספר תיק],B.[תאריך תחילת פטור]
 	  
  --into FINDINGS_תחילת_פטור
     FROM (select * 
 			,datefromparts(left([תאריך תחילת פטור של החשבון (חובה לפטור)],4),substring([תאריך תחילת פטור של החשבון (חובה לפטור)],5,2),right([תאריך תחילת פטור של החשבון (חובה לפטור)],2)) as SDATE
 			FROM [dbo].[FMR_MAKOR_NEW])  as A
     Join
-        (select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+        (select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
         FROM[PSAGOT_FMR].[dbo].[KEYS] ) as H
-     on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+     on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
    Full outer Join
    [PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
-   on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+   on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
    where 1=1
     and B.[מספר תיק] is not null
-    and CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) is not null
+    and CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) is not null
    
    and ISNULL(A.SDATE,'') <>ISNULL(B.[תאריך תחילת פטור],'')
 
@@ -821,17 +801,17 @@ Full outer Join
 		---------------------------------------------------------תאריך סגירה---------------------
 
     DROP table if exists FINDINGS_סגירה
-	SELECT isnull(CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar) AS FMR ,A.SDATE,A.[תאריך סגירת חשבון],B.[מספר תיק],B.[תאריך סגירה]
+	SELECT isnull(CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar),B.[מספר תיק]) MIS_TIK,CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar) AS FMR ,A.SDATE,A.[תאריך סגירת חשבון],B.[מספר תיק],B.[תאריך סגירה]
 --INTO FINDINGS_סגירה
 	FROM (select * 
 			,datefromparts(left([תאריך סגירת חשבון],4),substring([תאריך סגירת חשבון],5,2),right([תאריך סגירת חשבון],2)) as SDATE
 			FROM [dbo].[FMR_MAKOR_NEW]) as A
 left Join
-		(select [מספר תיק אפ#אמ#אר],[מספר תיק דנאל]
+		(select [מספר תיק חברה#מבוקשת#מקור],[מספר תיק חברה מבוקשת יעד]
 		FROM[PSAGOT_FMR_NEW].[dbo].[KEYS] ) as H
-	 on CAST (A.[מס. חשבון פסגות   (אפ.אמ.אר)] AS nvarchar)=H.[מספר תיק אפ#אמ#אר]
+	 on CAST (A.[מס. חשבון חברה מבוקשת   (קובץ מקור)] AS nvarchar)=H.[מספר תיק חברה#מבוקשת#מקור]
  Join 
 	[PSAGOT_FMR_NEW].[dbo].[FMR_ACCOUNTS_3] as B
-	on CAST( H.[מספר תיק דנאל] AS nvarchar)=B.[מספר תיק]
+	on CAST( H.[מספר תיק חברה מבוקשת יעד] AS nvarchar)=B.[מספר תיק]
 	where 1=1
 	and  A.SDATE<>B.[תאריך סגירה]
